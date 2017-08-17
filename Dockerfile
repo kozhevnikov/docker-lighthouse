@@ -6,18 +6,24 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 
 RUN apt-get update \
- && apt-get install --yes sudo xvfb google-chrome-stable
+ && apt-get install -y sudo xvfb google-chrome-stable \
+ && npm install -g lighthouse \
+ && mkdir /var/run/dbus
 
-RUN groupadd --gid 500 lighthouse \
- && useradd --uid 500 --gid 500 --groups root,sudo --create-home lighthouse \
- && passwd --delete lighthouse \
- && echo "Defaults lecture=never" >> /etc/sudoers
+ENV USER lighthouse
+ENV HOME /home/$USER
 
-USER lighthouse
-WORKDIR /home/lighthouse
+RUN groupadd -g 500 $USER \
+ && useradd -u 500 -g 500 -G root,sudo -m $USER \
+ && passwd -d $USER \
+ && echo "Defaults lecture=never" > /etc/sudoers.d/lecture
 
-RUN npm install --global lighthouse
+USER $USER
+WORKDIR $HOME
 
 COPY *.sh ./
+ENV CHROME_PATH $HOME/chrome.sh
+RUN ln -s $HOME/docker.sh /usr/local/bin/docker
 
-ENTRYPOINT ["/home/lighthouse/docker.sh"]
+ENTRYPOINT ["docker"]
+CMD ["lighthouse", "--help"]
