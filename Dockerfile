@@ -7,8 +7,7 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 
 RUN apt-get update \
  && apt-get install -y sudo xvfb google-chrome-stable \
- && npm install -g lighthouse \
- && mkdir /var/run/dbus
+ && npm install -g lighthouse
 
 ENV USER lighthouse
 ENV HOME /home/$USER

@@ -3,6 +3,7 @@
 cd ~
 
 if [ -z "$(pidof -x dbus-daemon)" ]; then
+    sudo mkdir -p /var/run/dbus
     sudo rm -f /var/run/dbus/pid
     sudo dbus-daemon --system;
 fi
