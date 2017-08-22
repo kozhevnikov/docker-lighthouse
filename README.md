@@ -5,5 +5,14 @@ Docker image with [Lighthouse](https://developers.google.com/web/tools/lighthous
 ```bash
 docker build -t lighthouse .
 docker run lighthouse lighthouse --help
-docker run -t -v $PWD/out:/home/lighthouse/out lighthouse lighthouse https://google.com --output-path out/report.html --save-assets
+```
+
+```bash
+docker run \
+  -t \
+  -v $PWD/out:/home/lighthouse/out \
+  lighthouse \
+    lighthouse https://google.com \
+    --output-path out/google.html \
+    --save-assets
 ```

@@ -9,7 +9,7 @@ fi
 if [ -z "$(pidof -x Xvfb)" ]; then
     export DISPLAY=:99
     sudo rm -f /tmp/.X99-lock
-    sudo Xvfb $DISPLAY -screen 0 1920x1080x24 +extension RANDR &
+    sudo -b Xvfb $DISPLAY -screen 0 1920x1080x24 -noreset +extension RANDR
 fi
 
 "$@"

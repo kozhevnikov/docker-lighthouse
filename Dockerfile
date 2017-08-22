@@ -1,6 +1,6 @@
 FROM node:8
 
-ENV CACHE 2017-08-15
+ENV CACHE 2017-08-23
 
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
